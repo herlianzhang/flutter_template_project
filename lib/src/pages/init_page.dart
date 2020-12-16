@@ -27,19 +27,29 @@ class _InitializationpageState extends State<Initializationpage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: BlocEventStateBuilder<ApplicationInitializationEvent,
-              ApplicationInitializationState>(
-            bloc: bloc,
-            builder: (context, state) {
-              if (state.isInitialized) {
-                print('complete');
-              }
-              return Text('Initialization in progress... ${state.progress}%');
-            },
-          ),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0),
+        child: AppBar(
+          backgroundColor: Colors.red,
+        ),
+      ),
+      body: Center(
+        child: BlocEventStateBuilder<ApplicationInitializationEvent,
+            ApplicationInitializationState>(
+          bloc: bloc,
+          builder: (context, state) {
+            if (state.isInitialized) {
+              print('complete');
+            }
+            return (state.isInitialized)
+                ? Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    color: Colors.red,
+                  )
+                : Text('Initialization in progress... ${state.progress}%');
+          },
         ),
       ),
     );
